@@ -1,7 +1,8 @@
 export default class Component {
-  constructor(tag, className = null) {
+  constructor(cb, tag, className = null) {
     this.className = className;
     this.el = document.createElement(tag);
+    this.cb = cb.bind(this);
   }
 
   render() {

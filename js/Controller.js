@@ -1,27 +1,31 @@
-import { jsonData } from '../data.js';
+import ListView from './components/ListView.js';
+import DetailsView from './components/DetailsView.js';
+import Slicer from './Slicer.js';
 
 export default class Controller {
-  constructor() {
-    this.data = JSON.parse(jsonData);
+  constructor(data, el) {
+    this.card = null;
+    this.data = data;
+    this.root = el;
   }
 
-  sortByField(arr, field) {
-
+  init(){
+    this.root.append(new ListView(this.openCard, 'div', 'list-view', this.data).render());
   }
 
-  selectFriends(person) {
-    return this.data.filter((item) => {
-      person.friends.includes(item.id);
-    });
+  backWard() {
+    console.log('test');
+    // this.root.removeChild(this.card);
   }
 
-  selectNotFriends(person) {
-    return this.data.filter((item) => {
-      !person.friends.includes(item.id);
-    }).splice(0, 2);
-  }
-
-  selectMostPopular() {
-    
+  openCard(id) {
+    const person = this.data.find((item) => item.id === id);
+    if (!person) {
+      return;
+    }
+    const cardData = new Slicer().selectFriends(person);
+    console.log(this);
+    this.card = new DetailsView(this.backWard, 'div', 'details-view', cardData).render();
+    this.root.append(this.card);
   }
 }

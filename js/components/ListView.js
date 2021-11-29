@@ -1,11 +1,12 @@
 import Component from './Component.js';
 
 export default class ListView extends Component {
-  constructor(tag, className, data = []) {
-    super(tag, className);
+  constructor(cb, tag, className, data = []) {
+    super(cb, tag, className);
     this.data = data;
     this.addList();
     this.addItems();
+    this.addListener();
   }
 
   addList() {
@@ -15,17 +16,23 @@ export default class ListView extends Component {
   }
 
   addListener() {
-    this.el.addEventListener('click', () => {
-
+    this.el.addEventListener('click', (e) => {
+      let target = e.target;
+      if (!target.dataset.id) {
+        target = target.parentElement;
+      }
+      const currentId = target.dataset.id
+      this.cb(Number(currentId));
     });
   }
 
   addItems() {
-    this.data.forEach((element) => {
-      const item = document.createElement('li');
-      if (element && element.name) {
-        item.innerHTML = `<strong>${element.name}</strong>`;
-        this.list.append(item);
+    this.data.forEach((item) => {
+      const element = document.createElement('li');
+      if (item && item.name) {
+        element.innerHTML = `<strong>${item.name}</strong>`;
+        element.dataset.id = item.id;
+        this.list.append(element);
       }
     });
   }
