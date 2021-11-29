@@ -10,22 +10,30 @@ export default class Controller {
   }
 
   init(){
-    this.root.append(new ListView(this.openCard, 'div', 'list-view', this.data).render());
+    this.root.append(new ListView(this.openCard.bind(this), 'div', 'list-view', this.data).render());
   }
 
-  backWard() {
+  closeCard() {
+    this.details.removeListener();
     console.log('test');
-    // this.root.removeChild(this.card);
+    this.root.removeChild(this.card);
+    this.root.classList.remove('details');
   }
 
   openCard(id) {
+    this.root.classList.add('details');
     const person = this.data.find((item) => item.id === id);
     if (!person) {
       return;
     }
-    const cardData = new Slicer().selectFriends(person);
-    console.log(this);
-    this.card = new DetailsView(this.backWard, 'div', 'details-view', cardData).render();
+    const slicer = new Slicer(this.data);
+    const cardData = [];
+    cardData.push(slicer.selectFriends(person));
+    cardData.push(slicer.selectNotFriends(person));
+    cardData.push(slicer.selectMostPopular());
+
+    this.details = new DetailsView(this.closeCard.bind(this), 'div', 'details-view', cardData);
+    this.card = this.details.render();
     this.root.append(this.card);
   }
 }

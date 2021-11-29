@@ -1,8 +1,6 @@
-import { jsonData } from '../data.js';
-
 export default class Slicer {
-  constructor() {
-    this.data = JSON.parse(jsonData);
+  constructor(data) {
+    this.data = data;
   }
 
   sortByField(arr, field) {
@@ -12,10 +10,10 @@ export default class Slicer {
   }
 
   selectFriends(person) {
-    // return this.data.filter((item) => {
-    //   person.friends.includes(item.id);
-    // });
-    return this.data.splice(0, 3);
+    return this.data.filter((item) => {
+      person.friends.includes(item.id);
+    });
+    // return this.data.splice(0, 3);
   }
 
   selectNotFriends(person) {
@@ -38,6 +36,6 @@ export default class Slicer {
         }
       });
     });
-    return this.sortByField(popularList, popularity).splice(0, 2);
+    return this.sortByField(popularList, 'popularity').splice(0, 2);
   }
 }

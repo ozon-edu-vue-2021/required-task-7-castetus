@@ -4,17 +4,18 @@ export default class DetailsView extends Component {
   constructor(cb, tag, className, data = []) {
     super(cb, tag, className);
     this.data = data;
-    this.addList();
-    this.addItems();
+    this.addElems();
+    this.addLists();
     this.addListener();
+    this.el.style.zIndex = 1;
   }
 
   addElems() {
     this.backButton = document.createElement('div');
-    backButton.classList.add('back');
+    this.backButton.classList.add('back');
     const background = document.createElement('div');
     background.classList.add('background');
-    this.el.append(backButton);
+    this.el.append(this.backButton);
     this.el.append(background);
   }
 
@@ -23,22 +24,29 @@ export default class DetailsView extends Component {
       const list = document.createElement('ul');
       list.classList.add('list-wrapper');
       element.forEach((item) => {
-        list.append.this.createSublist(item);
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `<i class="fa fa-male"></i><span >${item.name}</span>`;
+        list.append(listItem);
       })
+      this.el.append(list);
     });
-    this.el.append(list);
   }
 
   addListener() {
-    this.backButton.addEventListener('click', () => {
-      this.cb();
-    });
+    this.backButton.addEventListener('click', this.cb);
   }
 
-  createSublist(arr) {
-    arr.map((item) => {
-      const listItem = document.createElement('li');
-      listItem.innerHTML = `<i class="fa fa-male"></i><span >${item.name}</span>`;
-    });
+  removeListener() {
+    this.backButton.removeEventListener('click', this.cb);
   }
+
+  // createSublist(arr) {
+  //   const test = arr.map((item) => {
+  //     const listItem = document.createElement('li');
+  //     listItem.innerHTML = `<i class="fa fa-male"></i><span >${item.name}</span>`;
+  //     console.log(listItem)
+  //     return listItem;
+  //   });
+  //   console.log(test)
+  // }
 }
