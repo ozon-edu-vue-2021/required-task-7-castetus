@@ -1,4 +1,4 @@
-[
+export const jsonData = JSON.stringify([
     {
         "id": 1,
         "name": "Петя",
@@ -59,4 +59,4 @@
         "name": "Кирилл",
         "friends": [5,2,12]
     }
-]
+])
