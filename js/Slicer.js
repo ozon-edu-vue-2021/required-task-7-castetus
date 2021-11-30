@@ -3,29 +3,49 @@ export default class Slicer {
     this.data = data;
   }
 
-  sortByField(arr, field) {
+  sortByField(arr, field, secondField) {
     return arr.sort((a, b) => {
-      return a[field] - b[field];
+      if (a[field] > b[field]) {
+        return 1;
+      }
+      if (a[field] < b[field]) {
+        return -1;
+      }
+      if (a[secondField] > b[secondField]) {
+        return 1;
+      }
+      if (a[secondField] < b[secondField]) {
+        return -1;
+      }
+      return 0;
     });
   }
 
   selectFriends(person) {
-    return this.data.filter((item) => {
-      person.friends.includes(item.id);
-    });
-    // return this.data.splice(0, 3);
+    const result = {
+      title: 'Друзья',
+      data: this.data.filter((item) => {
+        return person.friends.includes(Number(item.id));
+      }).splice(0, 3)
+    };
+    return result;
   }
 
   selectNotFriends(person) {
-    return this.data.filter((item) => {
-      !person.friends.includes(item.id);
-    }).splice(0, 2);
+    const result = {
+      title: 'Не в друзьях',
+      data: this.data.filter((item) => {
+        return !person.friends.includes(Number(item.id));
+      }).splice(0, 3)
+    };
+    return result;
   }
 
   selectMostPopular() {
     const popularList = this.data.map((person) => {
       return {
         id: person.id,
+        name: person.name,
         popularity: 0,
       };
     });
@@ -36,6 +56,10 @@ export default class Slicer {
         }
       });
     });
-    return this.sortByField(popularList, 'popularity').splice(0, 2);
+    const result = {
+      title: 'Популярные люди',
+      data: this.sortByField(popularList, 'popularity', 'name').splice(0, 3)
+    };
+    return result;
   }
 }
