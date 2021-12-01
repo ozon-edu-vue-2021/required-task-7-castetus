@@ -1,5 +1,6 @@
 import { jsonData } from '../data.js';
 import Controller from './Controller.js';
+import '../css/style.css';
 
 document.addEventListener('DOMContentLoaded', () => {
   const data = JSON.parse(jsonData);
