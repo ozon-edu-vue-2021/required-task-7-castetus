@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "npx webpack serve --mode=development",
     "build": "npx webpack --mode=production",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "deploy": "npm run build && gh-pages -d dist"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,7 @@
   "homepage": "https://github.com/ozon-edu-vue-2021/required-task-7-castetus#readme",
   "devDependencies": {
     "css-loader": "^6.5.1",
+    "gh-pages": "^3.2.3",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.4.5",
     "style-loader": "^3.3.1",
